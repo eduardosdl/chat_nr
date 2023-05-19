@@ -1,5 +1,3 @@
-## Meu primeiro chat
+### Github repo for medium article series
 
-## O que fazer para colar codigo
-- Use o prefixo "/code" dê um espaço e cole o trecho de codigo
-- Após enviar na mensagem ira constar o codigo com um botão para copias
+[Part 1:](https://medium.com/p/976555ecba)
