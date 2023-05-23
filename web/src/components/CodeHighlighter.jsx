@@ -32,7 +32,8 @@ export function CodeHighlighter({ code }) {
         plugins: [parserBabel],
       });
     } catch (error) {
-      console.error("Erro ao formatar o código:", error);
+      console.log("Erro ao formatar o código, verifique se há comentarios e se o bloco de codigo está sendo fechado corretamente");
+      console.error(error);
       return code;
     }
   };

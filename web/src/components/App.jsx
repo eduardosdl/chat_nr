@@ -11,11 +11,9 @@ export function App() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Conectar ao servidor do Back4App usando socket.io-client
-    const socket = io("https://chatnrback2-edusilvae08.b4a.run/");
+    const socket = io("https://chatnrback5-edusilvae08.b4a.run");
     setSocket(socket);
 
-    // Lidar com mensagens recebidas do servidor
     socket.on("chat message", (data) => {
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -23,7 +21,6 @@ export function App() {
       ]);
     });
 
-    // Fechar a conexão do socket quando o componente for desmontado
     return () => {
       socket.disconnect();
     };
