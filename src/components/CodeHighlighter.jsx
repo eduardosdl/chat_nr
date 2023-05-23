@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import hljs from "highlight.js";
 import "highlight.js/styles/base16/dracula.css";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 
-export default function CodeHighlighter({ code }) {
+export function CodeHighlighter({ code }) {
   const codeRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
@@ -58,3 +59,7 @@ export default function CodeHighlighter({ code }) {
     </div>
   );
 }
+
+CodeHighlighter.propTypes = {
+  code: PropTypes.string.isRequired,
+};

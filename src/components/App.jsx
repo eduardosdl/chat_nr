@@ -1,40 +1,36 @@
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 
-import CodeHighlighter from "./CodeHighlighter";
+import { CodeHighlighter } from "./CodeHighlighter";
 
-let socket;
-
-export default function Home() {
+export function App() {
   const [username, setUsername] = useState("");
   const [chosenUsername, setChosenUsername] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    socketInitializer();
+    // Conectar ao servidor do Back4App usando socket.io-client
+    const socket = io("https://chatnrback2-edusilvae08.b4a.run/");
+    setSocket(socket);
+
+    // Lidar com mensagens recebidas do servidor
+    socket.on("chat message", (data) => {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { author: data.author, message: data.message },
+      ]);
+    });
+
+    // Fechar a conexão do socket quando o componente for desmontado
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  const socketInitializer = () => {
-    fetch("/api/socket").finally(() => {
-      socket = io();
-      console.log("connectou");
-
-      socket.on("newIncomingMessage", (msg) => {
-        setMessages((currentMsg) => [
-          ...currentMsg,
-          { author: msg.author, message: msg.message },
-        ]);
-      });
-    });
-  };
-
   const sendMessage = () => {
-    socket.emit("createdMessage", { author: chosenUsername, message });
-    setMessages((currentMsg) => [
-      ...currentMsg,
-      { author: chosenUsername, message },
-    ]);
+    socket.emit("chat message", { author: chosenUsername, message });
     setMessage("");
   };
 
